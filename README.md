@@ -1,40 +1,33 @@
-# Vite + RSC
+# LSPP 2026 Assignment
 
-This example shows how to set up a React application with [Server Component](https://react.dev/reference/rsc/server-components) features on Vite using [`@vitejs/plugin-rsc`](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-rsc).
+A project to ideate and reimagine the Leapfrog Student Partnership Program website. The main focus here is turning a static page into something highly interactive and alive.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vitejs/vite-plugin-react/tree/main/packages/plugin-rsc/examples/starter)
+Built with React.js and TypeScript.
 
-```sh
-# run dev server
-npm run dev
+### What's Inside
 
-# build for production and preview
-npm run build
-npm run preview
+* Animated data points that trigger on scroll
+* A searchable and filterable directory for student partners
+* Fully responsive layout built with Tailwind CSS
+* Smooth, modern UI/UX
+
+### Getting Started
+
+Install the dependencies:
+
+```bash
+npm install
 ```
 
-## API usage
+Spin up the local dev server:
 
-See [`@vitejs/plugin-rsc`](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-rsc) for the documentation.
+```bash
+npm run dev
+```
 
-- [`vite.config.ts`](./vite.config.ts)
-  - `@vitejs/plugin-rsc/plugin`
-- [`./src/framework/entry.rsc.tsx`](./src/framework/entry.rsc.tsx)
-  - `@vitejs/plugin-rsc/rsc`
-  - `import.meta.viteRsc.loadModule`
-- [`./src/framework/entry.ssr.tsx`](./src/framework/entry.ssr.tsx)
-  - `@vitejs/plugin-rsc/ssr`
-  - `import.meta.viteRsc.loadBootstrapScriptContent`
-  - `rsc-html-stream/server`
-- [`./src/framework/entry.browser.tsx`](./src/framework/entry.browser.tsx)
-  - `@vitejs/plugin-rsc/browser`
-  - `rsc-html-stream/client`
+### Built With
 
-## Notes
-
-- [`./src/framework/entry.{browser,rsc,ssr}.tsx`](./src/framework) (with inline comments) provides an overview of how low level RSC (React flight) API can be used to build RSC framework.
-- You can use [`vite-plugin-inspect`](https://github.com/antfu-collective/vite-plugin-inspect) to understand how `"use client"` and `"use server"` directives are transformed internally.
-
-## Deployment
-
-See [vite-plugin-rsc-deploy-example](https://github.com/hi-ogawa/vite-plugin-rsc-deploy-example)
+* React.js
+* TypeScript
+* Tailwind CSS
+* Vite
