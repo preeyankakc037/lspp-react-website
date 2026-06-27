@@ -12,6 +12,7 @@ import CTASection from './sections/CTASection';
 import Footer from './sections/Footer';
 import PerkCard from './components/common/PerkCard';
 import PerksSection from './sections/PerksSection';
+import ContributingSection from './sections/ContributingSection';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <AboutSection />
       <StatsSection />
       <PerksSection/>
+      <ContributingSection/>
       <HighlightsSection />
       <PartnersSection />
       <MentorsSection/>
