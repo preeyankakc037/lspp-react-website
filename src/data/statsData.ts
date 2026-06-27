@@ -1,33 +1,44 @@
 export interface StatItem {
   id: string;
-  value: string;
+  value: number; // Keep as number for count up animation
+  suffix?: string; // e.g. "+"
   label: string;
-  icon: string;
+  iconName: string;
+  subText?: string;
+  badge?: string;
+  goal?: number; // For progress bar
 }
 
 export const statsData: StatItem[] = [
   {
     id: "stat-1",
-    value: "95",
-    label: "Student Partners enrolled",
-    icon: "🧑‍🤝‍🧑" // Represents the community spheres
+    value: 95,
+    label: "Student partners enrolled",
+    iconName: "Users",
+    subText: "across all cohorts"
   },
   {
     id: "stat-2",
-    value: "80+",
-    label: "Knowledge sharing sessions delivered",
-    icon: "🏋️" // Represents the red dumbbell
+    value: 80,
+    suffix: "+",
+    label: "Knowledge sharing sessions",
+    iconName: "Dumbbell",
+    subText: "That's 1,000+ hrs of peer learning"
   },
   {
     id: "stat-3",
-    value: "5",
-    label: "Student Partners hired",
-    icon: "🔖" // Represents the purple ribbon bookmark
+    value: 5,
+    label: "Student partners hired",
+    iconName: "Briefcase",
+    badge: "live",
+    subText: "Last hired: 3 weeks ago"
   },
   {
     id: "stat-4",
-    value: "2100+",
+    value: 2100,
+    suffix: "+",
     label: "Students impacted by LSPs",
-    icon: "📘" // Represents the blue notebook
+    iconName: "BookOpen",
+    goal: 5000
   }
 ];
