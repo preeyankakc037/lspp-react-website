@@ -21,9 +21,9 @@ function App() {
       {/* ScrollLine is clean and safely integrated inside HeroSection navbar now! */}
       <HeroSection />
       <AboutSection />
-      <StatsSection />
       <PerksSection/>
       <ContributingSection/>
+      <StatsSection />
       <HighlightsSection />
       <PartnersSection />
       <MentorsSection/>
