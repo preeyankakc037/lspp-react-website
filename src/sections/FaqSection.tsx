@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 // The data extracted from your file
 const faqData = [
@@ -24,49 +24,50 @@ const FAQSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0); // Defaulting 0 to open the first item
 
   return (
-    <section className="py-24 px-6 max-w-4xl mx-auto">
-      <div className="text-center mb-16">
-        <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold tracking-wider mb-4">
-          SUPPORT
-        </span>
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
-          Frequently Asked Questions
+    <section className="py-24 px-6 max-w-3xl mx-auto">
+      <div className="mb-16">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
+          Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Questions</span>
         </h2>
-        <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-          Everything you need to know about the Leapfrog Student Partnership Program. Can't find the answer you're looking for? Feel free to drop us an email.
+        <p className="text-lg text-gray-500">
+          Everything you need to know about the Leapfrog Student Partnership Program.
         </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="flex flex-col">
         {faqData.map((item, index) => {
           const isOpen = openIndex === index;
           return (
             <div 
               key={index} 
-              className={`border border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 ease-in-out ${
-                isOpen ? 'bg-white shadow-lg shadow-blue-900/5 border-blue-100 ring-1 ring-blue-100' : 'bg-gray-50/50 hover:bg-gray-50 hover:border-gray-300'
-              }`}
+              className={`border-b border-gray-200 last:border-0 transition-colors duration-300 ${isOpen ? '' : 'hover:border-blue-200'}`}
             >
               <button
                 onClick={() => setOpenIndex(isOpen ? null : index)}
-                className="w-full text-left px-6 py-5 flex justify-between items-center focus:outline-none group"
+                className="w-full text-left py-6 flex justify-between items-center focus:outline-none group"
               >
-                <span className={`font-semibold text-lg pr-8 transition-colors duration-200 ${isOpen ? 'text-blue-600' : 'text-gray-800 group-hover:text-blue-600'}`}>
+                <span 
+                  className={`font-semibold text-lg md:text-xl pr-8 transition-all duration-300 ${
+                    isOpen ? 'text-blue-600' : 'text-gray-900 group-hover:text-blue-600 group-hover:translate-x-1'
+                  }`}
+                >
                   {item.q}
                 </span>
-                <div className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 ${isOpen ? 'bg-blue-100 text-blue-600 rotate-45' : 'bg-white border border-gray-200 text-gray-400 group-hover:border-blue-200 group-hover:text-blue-500 group-hover:bg-blue-50'}`}>
-                  <Plus className="w-5 h-5" />
-                </div>
+                <ChevronDown 
+                  className={`w-6 h-6 flex-shrink-0 transition-transform duration-300 ${
+                    isOpen ? 'text-blue-600 rotate-180' : 'text-gray-400 group-hover:text-blue-500'
+                  }`} 
+                />
               </button>
               
               {/* Smooth Grid Transition for Accordion */}
               <div 
-                className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${
-                  isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                className={`grid transition-[grid-template-rows,opacity,margin] duration-300 ease-in-out ${
+                  isOpen ? 'grid-rows-[1fr] opacity-100 mb-6' : 'grid-rows-[0fr] opacity-0 mb-0'
                 }`}
               >
                 <div className="overflow-hidden">
-                  <div className="px-6 pb-6 text-gray-600 leading-relaxed pt-2">
+                  <div className="text-gray-600 leading-relaxed text-base md:text-lg">
                     {item.a}
                   </div>
                 </div>
