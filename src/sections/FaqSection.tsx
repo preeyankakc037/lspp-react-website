@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Plus } from 'lucide-react';
 
 // The data extracted from your file
 const faqData = [
@@ -23,31 +24,56 @@ const FAQSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0); // Defaulting 0 to open the first item
 
   return (
-    <section className="py-20 px-6 max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">
-        Frequently Asked Questions
-      </h2>
+    <section className="py-24 px-6 max-w-4xl mx-auto">
+      <div className="text-center mb-16">
+        <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold tracking-wider mb-4">
+          SUPPORT
+        </span>
+        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+          Frequently Asked Questions
+        </h2>
+        <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+          Everything you need to know about the Leapfrog Student Partnership Program. Can't find the answer you're looking for? Feel free to drop us an email.
+        </p>
+      </div>
 
       <div className="space-y-4">
-        {faqData.map((item, index) => (
-          <div key={index} className="bg-[#EBF3FF] rounded-xl overflow-hidden">
-            <button
-              onClick={() => setOpenIndex(openIndex === index ? null : index)}
-              className="w-full text-left p-6 flex justify-between items-center font-bold text-gray-800"
+        {faqData.map((item, index) => {
+          const isOpen = openIndex === index;
+          return (
+            <div 
+              key={index} 
+              className={`border border-gray-200 rounded-2xl overflow-hidden transition-all duration-300 ease-in-out ${
+                isOpen ? 'bg-white shadow-lg shadow-blue-900/5 border-blue-100 ring-1 ring-blue-100' : 'bg-gray-50/50 hover:bg-gray-50 hover:border-gray-300'
+              }`}
             >
-              {item.q}
-              {/* Simple Chevron Icon using text/CSS */}
-              <span className={`transform transition-transform ${openIndex === index ? 'rotate-180' : ''}`}>
-                ▲
-              </span>
-            </button>
-            
-            {/* The collapsible content */}
-            <div className={`px-6 pb-6 text-gray-700 leading-relaxed ${openIndex === index ? 'block' : 'hidden'}`}>
-              {item.a}
+              <button
+                onClick={() => setOpenIndex(isOpen ? null : index)}
+                className="w-full text-left px-6 py-5 flex justify-between items-center focus:outline-none group"
+              >
+                <span className={`font-semibold text-lg pr-8 transition-colors duration-200 ${isOpen ? 'text-blue-600' : 'text-gray-800 group-hover:text-blue-600'}`}>
+                  {item.q}
+                </span>
+                <div className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 ${isOpen ? 'bg-blue-100 text-blue-600 rotate-45' : 'bg-white border border-gray-200 text-gray-400 group-hover:border-blue-200 group-hover:text-blue-500 group-hover:bg-blue-50'}`}>
+                  <Plus className="w-5 h-5" />
+                </div>
+              </button>
+              
+              {/* Smooth Grid Transition for Accordion */}
+              <div 
+                className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out ${
+                  isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <div className="px-6 pb-6 text-gray-600 leading-relaxed pt-2">
+                    {item.a}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
