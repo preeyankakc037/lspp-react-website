@@ -5,10 +5,9 @@ import { contributingData } from '../data/contributingData';
 const ContributingSection: React.FC = () => {
   return (
     <section className="py-20 px-6 max-w-7xl mx-auto">
-      
-      {/* Section Header */}
+
       <div className="mb-12 text-center">
-        {/* Entire title is now uniform brand blue */}
+
         <h2 className="text-4xl font-extrabold text-blue-600 tracking-tight">
           How will you be contributing?
         </h2>
@@ -17,7 +16,6 @@ const ContributingSection: React.FC = () => {
         </p>
       </div>
 
-      {/* Balanced 2-Column Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {contributingData.map((item) => (
           <PerkCard 

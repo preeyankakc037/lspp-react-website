@@ -1,21 +1,20 @@
 import React from 'react';
 
-// You can add more image paths here later!
 const highlightImages = [
-  "/highlight-1.jpg",
-  "/highlight-2.jpg",
-  "/highlight-3.jpg",
-  "/highlight-4.jpg",
-  "/highlight-5.jpg",
-  "/highlight-6.jpg",
+  "/pexels/1.png",
+  "/pexels/2.png",
+  "/pexels/3.png",
+  "/pexels/4.png",
+  "/pexels/5.png",
 ];
+
+const duplicatedImages = [...highlightImages, ...highlightImages];
 
 const HighlightsSection: React.FC = () => {
   return (
-    <section className="py-16 md:py-24 px-6 md:px-16 max-w-7xl mx-auto">
+    <section className="py-16 md:py-24 overflow-hidden">
       
-      {/* Header text */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-12 px-6 max-w-7xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-[#D9232D] mb-4">
           Pixel-Perfect Highlights
         </h2>
@@ -24,34 +23,35 @@ const HighlightsSection: React.FC = () => {
         </p>
       </div>
 
-      {/* Masonry Grid Layout 
-        - columns-1/2/3 creates vertical columns.
-        - gap-6 adds space between columns.
-        - space-y-6 adds space between images vertically.
-      */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-        {highlightImages.map((src, index) => (
-          <div 
-            key={index} 
-            // break-inside-avoid prevents an image from being split across two columns
-            className="break-inside-avoid rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
-          >
-            <img
-              src={src}
-              alt={`Program Highlight ${index + 1}`}
-              className="w-full h-auto object-cover"
-              onError={(e) => {
-                // Fallback UI if the image is missing from the public folder
-                e.currentTarget.style.display = 'none';
-                const parent = e.currentTarget.parentElement;
-                if(parent) {
-                    parent.className += " aspect-video bg-gray-50 flex flex-col items-center justify-center border-2 border-dashed border-gray-200 text-gray-400 font-mono text-xs p-4 text-center";
-                    parent.innerHTML = `<span>Missing Image</span><span class="mt-1 opacity-70">public${src}</span>`;
-                }
-              }}
-            />
-          </div>
-        ))}
+      <div className="w-full max-w-7xl mx-auto px-6">
+        <div className="relative w-full flex overflow-hidden rounded-3xl">
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+          
+          <div className="flex w-max animate-marquee gap-6 cursor-pointer py-4">
+          {duplicatedImages.map((src, index) => (
+            <div 
+              key={index} 
+              className="w-[280px] sm:w-[400px] aspect-[4/3] shrink-0 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+            >
+              <img
+                src={src}
+                alt={`Program Highlight ${index + 1}`}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+
+                  e.currentTarget.style.display = 'none';
+                  const parent = e.currentTarget.parentElement;
+                  if(parent) {
+                      parent.className += " aspect-video bg-gray-50 flex flex-col items-center justify-center border-2 border-dashed border-gray-200 text-gray-400 font-mono text-xs p-4 text-center";
+                      parent.innerHTML = `<span>Missing Image</span><span class="mt-1 opacity-70">public${src}</span>`;
+                  }
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
       </div>
 
     </section>

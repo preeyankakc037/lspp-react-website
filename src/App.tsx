@@ -12,11 +12,10 @@ import Footer from './sections/Footer';
 import PerksSection from './sections/PerksSection';
 import ContributingSection from './sections/ContributingSection';
 
-
 function App() {
   return (
     <div className="relative min-h-screen bg-white text-gray-900 antialiased">
-      {/* ScrollLine is clean and safely integrated inside HeroSection navbar now! */}
+
       <HeroSection />
       <AboutSection />
       <PerksSection/>

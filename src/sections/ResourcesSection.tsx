@@ -1,20 +1,19 @@
 import React from 'react';
 
-// The data for the resources section, including those specific soft background colors
 const resources = [
   {
     title: "Event & Insights videos",
     action: "Watch on YouTube →",
     link: "https://www.lftechnology.com/",
     bgColor: "bg-[#eef3ff]", // Soft Blue
-    image: "/resources/events.png"
+    image: "/resources/event.png"
   },
   {
     title: "Workshops",
     action: "Checkout recordings →",
     link: "https://www.lftechnology.com/",
     bgColor: "bg-[#eaf5eb]", // Soft Green
-    image: "/resources/workshops.png"
+    image: "/resources/workshop.png"
   },
   {
     title: "Projects by Partners",
@@ -28,15 +27,14 @@ const resources = [
     action: "Checkout on Linkedin →",
     link: "https://www.lftechnology.com/",
     bgColor: "bg-[#ffeded]", // Soft Pink
-    image: "/resources/byteside.png"
+    image: "/resources/look_at_the_byte.png"
   }
 ];
 
 const ResourcesSection: React.FC = () => {
   return (
     <section className="py-16 md:py-24 px-6 md:px-12 max-w-7xl mx-auto text-center">
-      
-      {/* Header */}
+
       <div className="mb-12">
         <h2 className="text-4xl md:text-5xl font-bold text-[#0052FF] mb-4 tracking-tight">
           Resources
@@ -46,7 +44,6 @@ const ResourcesSection: React.FC = () => {
         </p>
       </div>
 
-      {/* Grid Layout: 1 col on mobile, 2 on tablet, 4 on desktop */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
         {resources.map((resource, index) => (
           <a 
@@ -54,15 +51,14 @@ const ResourcesSection: React.FC = () => {
             href={resource.link}
             target="_blank" 
             rel="noopener noreferrer"
-            // The group class lets us target child elements on hover
-            className={`group rounded-[2rem] p-6 flex flex-col h-full transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${resource.bgColor}`}
+            className={`group rounded-[1.5rem] p-5 flex flex-col h-full transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${resource.bgColor}`}
           >
-            {/* Image Container */}
-            <div className="w-full flex-grow flex items-center justify-center mb-6 min-h-[180px]">
+
+            <div className="w-full flex items-center justify-center mb-4 h-[160px]">
               <img 
                 src={resource.image} 
                 alt={resource.title}
-                className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                   const parent = e.currentTarget.parentElement;
@@ -74,7 +70,6 @@ const ResourcesSection: React.FC = () => {
               />
             </div>
 
-            {/* Card Text */}
             <div className="mt-auto">
               <h3 className="font-bold text-[17px] text-gray-900 mb-2 leading-tight">
                 {resource.title}

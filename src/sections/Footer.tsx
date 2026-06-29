@@ -4,8 +4,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-[#1F2937] text-white py-16 px-6">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        
-        {/* Newsletter */}
+
         <div>
           <h3 className="text-xl font-bold mb-3">Join our newsletter</h3>
           <p className="text-gray-400 text-sm mb-6 max-w-sm">
@@ -23,7 +22,6 @@ const Footer: React.FC = () => {
           </form>
         </div>
 
-        {/* Logo & Policies */}
         <div className="md:text-right">
           <div className="text-2xl font-bold mb-4 italic">leapfrog</div>
           <div className="flex flex-col md:flex-row md:justify-end gap-4 text-sm text-gray-400">

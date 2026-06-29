@@ -20,4 +20,5 @@ export interface PartnerProfile {
   college: string;
   year: string; // 👈 To filter between 2022 - 2026 cohorts
   imageUrl?: string; // 👈 For the profile photos
+  linkedin?: string; // 👈 For LinkedIn icon
 }

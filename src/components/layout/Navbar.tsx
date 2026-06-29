@@ -5,21 +5,17 @@ const ScrollLine: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Total height of the page minus the visible viewport window height
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
       
       if (totalScroll > 0) {
         const currentScroll = window.scrollY;
-        // Calculate percentage scrolled (0 to 100)
         const percentage = (currentScroll / totalScroll) * 100;
         setScrollProgress(percentage);
       }
     };
 
-    // Attach listener on mount
     window.addEventListener('scroll', handleScroll, { passive: true });
     
-    // Clean up listener on unmount
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

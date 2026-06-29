@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Users, BookOpen, Briefcase, GraduationCap } from 'lucide-react';
 
-// ─── Confetti particle type ───────────────────────────────────────────────────
 interface Particle {
   id: number;
   x: number;
@@ -16,7 +15,6 @@ interface Particle {
   shape: 'rect' | 'circle' | 'star';
 }
 
-// ─── Confetti Canvas ──────────────────────────────────────────────────────────
 const ConfettiCanvas: React.FC<{ active: boolean; originX: number; originY: number }> = ({
   active,
   originX,
@@ -79,7 +77,7 @@ const ConfettiCanvas: React.FC<{ active: boolean; originX: number; originY: numb
       particlesRef.current.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.25; // gravity
+        p.vy += 0.25;
         p.vx *= 0.99;
         p.rotation += p.rotationSpeed;
         p.opacity -= 0.012;
@@ -127,7 +125,6 @@ const ConfettiCanvas: React.FC<{ active: boolean; originX: number; originY: numb
   );
 };
 
-// ─── Animated Counter ─────────────────────────────────────────────────────────
 const AnimatedCounter: React.FC<{
   value: number;
   suffix?: string;
@@ -157,7 +154,6 @@ const AnimatedCounter: React.FC<{
   );
 };
 
-// ─── Stats data inline (matches reference image) ──────────────────────────────
 const stats = [
   {
     id: 'stat-1',
@@ -167,6 +163,9 @@ const stats = [
     label: 'Student Partners',
     labelHighlight: 'enrolled',
     isHired: false,
+    textGradient: 'from-rose-500 to-orange-400',
+    iconColor: 'text-rose-500',
+    highlightColor: '#f43f5e'
   },
   {
     id: 'stat-2',
@@ -176,6 +175,9 @@ const stats = [
     label: 'Knowledge sharing',
     labelHighlight: 'sessions delivered',
     isHired: false,
+    textGradient: 'from-purple-600 to-pink-500',
+    iconColor: 'text-purple-500',
+    highlightColor: '#9333ea'
   },
   {
     id: 'stat-3',
@@ -184,7 +186,10 @@ const stats = [
     suffix: '',
     label: 'Student Partners',
     labelHighlight: 'hired',
-    isHired: true, // confetti trigger
+    isHired: true,
+    textGradient: 'from-blue-600 to-cyan-500',
+    iconColor: 'text-blue-500',
+    highlightColor: '#2563eb'
   },
   {
     id: 'stat-4',
@@ -194,10 +199,12 @@ const stats = [
     label: 'Students impacted',
     labelHighlight: 'by LSPs',
     isHired: false,
+    textGradient: 'from-emerald-500 to-teal-400',
+    iconColor: 'text-emerald-500',
+    highlightColor: '#10b981'
   },
 ];
 
-// ─── Main Section ─────────────────────────────────────────────────────────────
 const StatsSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const hiredCardRef = useRef<HTMLDivElement>(null);
@@ -210,9 +217,8 @@ const StatsSection: React.FC = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          setConfettiActive(false); // reset first so the effect re-triggers
+          setConfettiActive(false);
 
-          // Read position right when confetti fires so it's accurate regardless of scroll
           setTimeout(() => {
             if (hiredCardRef.current) {
               const rect = hiredCardRef.current.getBoundingClientRect();
@@ -224,7 +230,6 @@ const StatsSection: React.FC = () => {
             setConfettiActive(true);
           }, 1200);
         } else {
-          // Section left viewport — reset so next entry re-triggers confetti
           setConfettiActive(false);
           setIsVisible(false);
         }
@@ -248,17 +253,14 @@ const StatsSection: React.FC = () => {
       >
         <div className="max-w-5xl mx-auto">
 
-          {/* Header */}
           <div className="text-center mb-14">
             <h2
-              className="text-3xl md:text-4xl font-extrabold tracking-tight"
-              style={{ color: '#0A5C47' }}
+              className="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 pb-2"
             >
               Building it, bit by bit
             </h2>
           </div>
 
-          {/* Stats Grid */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
             {stats.map((stat) => (
               <div
@@ -266,18 +268,14 @@ const StatsSection: React.FC = () => {
                 ref={stat.isHired ? hiredCardRef : undefined}
                 className="flex flex-col items-center text-center relative group"
               >
-                {/* Icon */}
                 <div
-                  className="mb-5 transition-transform duration-300 group-hover:scale-110"
-                  style={{ color: '#0A5C47' }}
+                  className={`mb-5 transition-transform duration-300 group-hover:scale-110 ${stat.iconColor}`}
                 >
                   <stat.icon size={44} strokeWidth={1.5} />
                 </div>
 
-                {/* Animated number */}
                 <div
-                  className="text-5xl md:text-6xl font-black leading-none mb-3"
-                  style={{ color: '#0A5C47' }}
+                  className={`text-5xl md:text-6xl font-black leading-none mb-3 text-transparent bg-clip-text bg-gradient-to-br ${stat.textGradient} pb-2`}
                 >
                   <AnimatedCounter
                     value={stat.value}
@@ -287,17 +285,15 @@ const StatsSection: React.FC = () => {
                   />
                 </div>
 
-                {/* Label: regular + highlighted word */}
                 <p className="text-gray-700 text-sm font-medium leading-snug max-w-[120px]">
                   {stat.label}{' '}
                   <span
                     className="font-semibold"
-                    style={{ color: stat.isHired ? '#0A5C47' : '#374151' }}
+                    style={{ color: stat.isHired ? '#e11d48' : stat.highlightColor }}
                   >
                     {stat.labelHighlight}
                   </span>
                 </p>
-
 
               </div>
             ))}

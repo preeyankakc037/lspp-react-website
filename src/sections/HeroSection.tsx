@@ -15,22 +15,21 @@ const HeroSection: React.FC = () => {
 
   return (
     <>
-      {/* Sticky wrapper — full width, sits on top */}
+
       <div className="sticky top-0 z-50 w-full px-4 md:px-8 pt-4 pb-2">
 
-        {/* Floating pill navbar */}
         <div className="relative max-w-6xl mx-auto bg-white rounded-full shadow-lg shadow-black/10 border border-gray-100 px-5 py-3 flex items-center justify-between overflow-hidden">
 
-          {/* Left: Logo */}
-          <div className="flex items-center shrink-0">
-            <img
-              src="/leapLogo.png"
-              alt="Leapfrog Logo"
-              className="h-7 object-contain"
-            />
+          <div className="flex items-center shrink-0 cursor-pointer transition-transform hover:scale-105">
+            <a href="/">
+              <img
+                src="/leapLogo.png"
+                alt="Leapfrog Logo"
+                className="h-7 object-contain"
+              />
+            </a>
           </div>
 
-          {/* Center: Nav links (desktop) */}
           <nav className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <a
@@ -43,7 +42,6 @@ const HeroSection: React.FC = () => {
             ))}
           </nav>
 
-          {/* Right: CTA Button */}
           <div className="hidden md:flex items-center gap-3 shrink-0">
             <a
               href="#apply"
@@ -53,7 +51,6 @@ const HeroSection: React.FC = () => {
             </a>
           </div>
 
-          {/* Mobile: Hamburger */}
           <button
             className="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -62,11 +59,9 @@ const HeroSection: React.FC = () => {
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
 
-          {/* ScrollLine progress bar at bottom of pill */}
           <ScrollLine />
         </div>
 
-        {/* Mobile Dropdown Menu */}
         {mobileOpen && (
           <div className="md:hidden max-w-6xl mx-auto mt-2 bg-white rounded-3xl shadow-lg border border-gray-100 px-4 py-3 flex flex-col gap-1">
             {navLinks.map((link) => (
@@ -90,10 +85,8 @@ const HeroSection: React.FC = () => {
         )}
       </div>
 
-      {/* Main Hero Container */}
       <section className="py-12 md:py-20 px-6 md:px-16 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-        {/* Left Column Content */}
         <div className="lg:col-span-6 space-y-6 text-left">
           <div className="flex items-start gap-4">
             <img
@@ -116,7 +109,6 @@ const HeroSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Right Column Content Image Frame */}
         <div className="lg:col-span-6 w-full">
           <div className="w-full overflow-hidden rounded-[2.5rem] shadow-xs">
             <img
