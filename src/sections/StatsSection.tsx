@@ -62,15 +62,15 @@ const StatsSection: React.FC = () => {
   const progressPercentage = goalStat && goalStat.goal ? Math.min((goalStat.value / goalStat.goal) * 100, 100) : 0;
 
   return (
-    <section ref={sectionRef} className="bg-[#FAF6EE] py-20 px-6 my-12 font-sans w-full overflow-hidden">
+    <section ref={sectionRef} className="py-20 px-6 my-12 font-sans w-full overflow-hidden">
       <div className="max-w-6xl mx-auto">
         
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#004B6E] mb-2 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2 tracking-tight">
             Building it, bit by bit
           </h2>
-          <p className="text-[#004B6E]/70 text-lg font-medium">
+          <p className="text-gray-600 text-lg font-medium">
             Real numbers, real impact — updated every cohort
           </p>
         </div>
@@ -84,27 +84,27 @@ const StatsSection: React.FC = () => {
               <div key={stat.id} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col items-center text-center relative hover:-translate-y-1 transition-transform duration-300">
                 
                 {/* Icon graphic spot */}
-                <div className="text-[#00875A] mb-4">
+                <div className="text-[#048E43] mb-4">
                   <IconComponent size={32} strokeWidth={1.5} />
                 </div>
                 
                 {/* Numbers */}
                 <div className="flex items-start justify-center gap-1">
-                  <span className="text-5xl font-black text-[#004B6E] tracking-tight">
+                  <span className="text-5xl font-black text-gray-900 tracking-tight">
                     <AnimatedCounter value={stat.value} suffix={stat.suffix} isVisible={isVisible} />
                   </span>
                 </div>
                 
                 {/* Label text */}
-                <p className="text-[#004B6E]/80 text-sm font-semibold mt-3 mb-1 px-4 leading-tight">
+                <p className="text-gray-700 text-sm font-semibold mt-3 mb-1 px-4 leading-tight">
                   {stat.label}
                 </p>
 
                 {/* Optional Badge */}
                 {stat.badge && (
                   <div className="absolute top-4 right-4">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-[#00875A]/10 text-[#00875A] border border-[#00875A]/20">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#00875A] animate-pulse"></span>
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-[#048E43]/10 text-[#048E43] border border-[#048E43]/20">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#048E43] animate-pulse"></span>
                       {stat.badge}
                     </span>
                   </div>
@@ -119,7 +119,7 @@ const StatsSection: React.FC = () => {
                 
                 {/* Optional Goal for cards if we wanted, but we have a dedicated bar */}
                 {stat.goal && (
-                  <p className="text-[#00875A] text-xs mt-3 pt-3 border-t border-gray-100 w-full flex items-center justify-center gap-1 font-bold">
+                  <p className="text-[#048E43] text-xs mt-3 pt-3 border-t border-gray-100 w-full flex items-center justify-center gap-1 font-bold">
                     Goal: {new Intl.NumberFormat('en-US').format(stat.goal)} <span className="rotate-[-45deg] leading-none">→</span>
                   </p>
                 )}
@@ -132,12 +132,12 @@ const StatsSection: React.FC = () => {
         {goalStat && goalStat.goal && (
           <div>
             <div className="flex justify-between items-end mb-3">
-              <span className="text-[#004B6E] font-bold text-lg">Students impacted toward goal</span>
-              <span className="text-[#00875A] font-black text-lg">{Math.round(progressPercentage)}%</span>
+              <span className="text-gray-900 font-bold text-lg">Students impacted toward goal</span>
+              <span className="text-[#048E43] font-black text-lg">{Math.round(progressPercentage)}%</span>
             </div>
             <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
               <div 
-                className="h-full bg-[#00875A] transition-all duration-1000 ease-out rounded-full"
+                className="h-full bg-[#048E43] transition-all duration-1000 ease-out rounded-full"
                 style={{ width: isVisible ? `${progressPercentage}%` : '0%', transitionDelay: '300ms' }}
               ></div>
             </div>
