@@ -1,12 +1,12 @@
 export interface StatItem {
   id: string;
-  value: number; // Keep as number for count up animation
-  suffix?: string; // e.g. "+"
+  value: number;
+  suffix?: string;
   label: string;
   iconName: string;
   subText?: string;
   badge?: string;
-  goal?: number; // For progress bar
+  goal?: number;
 }
 
 export const statsData: StatItem[] = [

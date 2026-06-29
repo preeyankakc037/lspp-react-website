@@ -1,11 +1,11 @@
-import type { ReactNode } from 'react';
+import type { ElementType } from 'react';
 
 export interface PerkCardData {
   id: string;
   title: string;
   bulletPoints: string[];
-  iconSymbol: ReactNode;
-  variant?: 'orange' | 'blue'; // 👈 Add this optional prop line
+  icon: ElementType;
+  variant?: 'orange' | 'blue';
 }
 
 export interface StatItem {
@@ -18,7 +18,8 @@ export interface PartnerProfile {
   id: string;
   name: string;
   college: string;
-  year: string; // 👈 To filter between 2022 - 2026 cohorts
-  imageUrl?: string; // 👈 For the profile photos
-  linkedin?: string; // 👈 For LinkedIn icon
+  // used for cohort tab filtering
+  year: string;
+  imageUrl?: string;
+  linkedin?: string;
 }

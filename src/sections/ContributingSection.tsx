@@ -23,7 +23,7 @@ const ContributingSection: React.FC = () => {
             id={item.id}
             title={item.title}
             bulletPoints={item.bulletPoints}
-            iconSymbol={item.iconSymbol}
+            icon={item.icon}
             variant="blue"
           />
         ))}

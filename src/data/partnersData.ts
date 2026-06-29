@@ -7,7 +7,7 @@ const real2026Students = [
   { name: "Sworna Dhan Tuladhar", college: "Islington College", imageUrl: "/students images/sworna.png" },
   { name: "Ayam Kattel", college: "Pulchowk Campus", imageUrl: "/students images/ayam.png" },
   { name: "Nozomi Giri", college: "Kathmandu Engineering College", imageUrl: "/students images/nozomi.png" },
-  { name: "Priyanka Khatri", college: "Sunway College", imageUrl: "/priyanka.jpeg" }, // 🎯 Bound perfectly
+  { name: "Priyanka Khatri", college: "Sunway College", imageUrl: "/priyanka.jpeg" },
   { name: "Yojana Ghimire", college: "IOE WRC", imageUrl: "/students images/yojana.png" },
   { name: "Shreyam Regmi", college: "Pulchowk Campus", imageUrl: "/students images/shreyam.png" },
   { name: "Smriti Adhikari", college: "Deerwalk Institute of Technology", imageUrl: "/students images/smriti.png" },

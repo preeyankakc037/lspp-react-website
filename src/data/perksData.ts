@@ -10,7 +10,7 @@ export const perksData: PerkCardData[] = [
       "Organize events, workshops, and meetups.",
       "Be the face of Leapfrog in your college."
     ],
-    iconSymbol: <Star size={24} strokeWidth={2} />
+    icon: Star
   },
   {
     id: "perk-2",
@@ -20,7 +20,7 @@ export const perksData: PerkCardData[] = [
       "Direct referral for internship/fellowship opportunities.",
       "Get a sneak peek into the Leapfrog culture."
     ],
-    iconSymbol: <Rocket size={24} strokeWidth={2} />
+    icon: Rocket
   },
   {
     id: "perk-3",
@@ -30,7 +30,7 @@ export const perksData: PerkCardData[] = [
       "Mentorship from industry experts.",
       "Get hands-on experience in community building."
     ],
-    iconSymbol: <TrendingUp size={24} strokeWidth={2} />
+    icon: TrendingUp
   },
   {
     id: "perk-4",
@@ -40,6 +40,6 @@ export const perksData: PerkCardData[] = [
       "Expand your professional network.",
       "Exclusive access to Leapfrog events."
     ],
-    iconSymbol: <Handshake size={24} strokeWidth={2} />
+    icon: Handshake
   }
 ];

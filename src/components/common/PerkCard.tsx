@@ -1,7 +1,7 @@
 import React from 'react';
 import type { PerkCardData } from '../../types';
 
-const PerkCard: React.FC<PerkCardData> = ({ title, bulletPoints, iconSymbol, variant = 'orange' }) => {
+const PerkCard: React.FC<PerkCardData> = ({ title, bulletPoints, icon: Icon, variant = 'orange' }) => {
   
   const styles = {
     orange: {
@@ -10,9 +10,9 @@ const PerkCard: React.FC<PerkCardData> = ({ title, bulletPoints, iconSymbol, var
       bulletColor: "text-orange-500"
     },
     blue: {
-      cardBg: "bg-[#f4f9ff]", // Soft Leapfrog blue background
-      iconBg: "bg-blue-600",   // Solid blue badge
-      bulletColor: "text-blue-600" // Blue custom bullets
+      cardBg: "bg-[#f4f9ff]",
+      iconBg: "bg-blue-600",
+      bulletColor: "text-blue-600"
     }
   };
 
@@ -22,7 +22,7 @@ const PerkCard: React.FC<PerkCardData> = ({ title, bulletPoints, iconSymbol, var
     <div className={`${currentStyle.cardBg} rounded-2xl p-8 flex flex-col gap-6 shadow-sm hover:shadow-md transition-shadow`}>
 
       <div className={`${currentStyle.iconBg} w-14 h-14 rounded-full flex items-center justify-center text-white shadow-inner`}>
-        {iconSymbol}
+        <Icon size={24} strokeWidth={2} />
       </div>
 
       <h3 className="text-2xl font-bold text-gray-900 leading-tight">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { partnersData } from '../data/partnersData'; // 👈 Reading back from data source
+import { partnersData } from '../data/partnersData';
 import { Search, GraduationCap } from 'lucide-react';
 
 const LinkedInIcon = () => (

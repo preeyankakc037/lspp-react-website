@@ -132,24 +132,29 @@ const AnimatedCounter: React.FC<{
   duration?: number;
 }> = ({ value, suffix = '', isVisible, duration = 2200 }) => {
   const [count, setCount] = useState(0);
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
     if (!isVisible) return;
+    cancelAnimationFrame(rafRef.current);
     let start: number | null = null;
+
     const step = (ts: number) => {
       if (!start) start = ts;
       const progress = Math.min((ts - start) / duration, 1);
       const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       setCount(Math.floor(ease * value));
-      if (progress < 1) requestAnimationFrame(step);
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(step);
+      }
     };
-    requestAnimationFrame(step);
+    rafRef.current = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(rafRef.current);
   }, [isVisible, value, duration]);
 
   return (
     <span>
-      {new Intl.NumberFormat('en-US').format(count)}
-      {suffix}
+      {new Intl.NumberFormat('en-US').format(count)}{suffix}
     </span>
   );
 };

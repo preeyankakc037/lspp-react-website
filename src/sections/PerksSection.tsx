@@ -19,7 +19,7 @@ const PerksSection: React.FC = () => {
             id={perk.id}
             title={perk.title}
             bulletPoints={perk.bulletPoints}
-            iconSymbol={perk.iconSymbol}
+            icon={perk.icon}
           />
         ))}
       </div>

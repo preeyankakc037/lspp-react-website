@@ -10,7 +10,7 @@ export const contributingData: PerkCardData[] = [
       "Host regular workshops and events focused on accelerating skill building",
       "Learn and develop design, technology, and business skills from industry professionals"
     ],
-    iconSymbol: <Megaphone size={24} strokeWidth={2} />
+    icon: Megaphone
   },
   {
     id: "contrib-2",
@@ -20,6 +20,6 @@ export const contributingData: PerkCardData[] = [
       "Take new learnings to build solutions for real life problems",
       "Strengthen your own skill set while building future leaders"
     ],
-    iconSymbol: <Lightbulb size={24} strokeWidth={2} />
+    icon: Lightbulb
   },
 ];
