@@ -6,7 +6,7 @@ const navLinks = [
   { label: 'About', href: '#about' },
   { label: 'Perks', href: '#perks' },
   { label: 'Mentors', href: '#mentors' },
-  { label: 'Highlights', href: '#highlights' },
+  { label: 'Student Partners', href: '#student-partners' },
   { label: 'FAQ', href: '#faq' },
 ];
 

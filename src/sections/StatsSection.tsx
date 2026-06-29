@@ -1,155 +1,310 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { statsData } from '../data/statsData';
-import { Users, Dumbbell, Briefcase, BookOpen } from 'lucide-react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 
-// Icon Map
-const iconMap: Record<string, React.ElementType> = {
-  Users,
-  Dumbbell,
-  Briefcase,
-  BookOpen
+// ─── Confetti particle type ───────────────────────────────────────────────────
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  color: string;
+  rotation: number;
+  rotationSpeed: number;
+  size: number;
+  opacity: number;
+  shape: 'rect' | 'circle' | 'star';
+}
+
+// ─── Confetti Canvas ──────────────────────────────────────────────────────────
+const ConfettiCanvas: React.FC<{ active: boolean; originX: number; originY: number }> = ({
+  active,
+  originX,
+  originY,
+}) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const particlesRef = useRef<Particle[]>([]);
+  const rafRef = useRef<number>(0);
+
+  const spawnParticles = useCallback(() => {
+    const colors = ['#00875A', '#00BFA5', '#FFD600', '#FF6B35', '#7C3AED', '#EC4899', '#3B82F6', '#F59E0B'];
+    const count = 120;
+    particlesRef.current = Array.from({ length: count }, (_, i) => {
+      const angle = (Math.random() * Math.PI * 2);
+      const speed = 4 + Math.random() * 8;
+      return {
+        id: i,
+        x: originX,
+        y: originY,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 12,
+        size: 6 + Math.random() * 8,
+        opacity: 1,
+        shape: (['rect', 'circle', 'star'] as const)[Math.floor(Math.random() * 3)],
+      };
+    });
+  }, [originX, originY]);
+
+  useEffect(() => {
+    if (!active) return;
+    cancelAnimationFrame(rafRef.current);
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    spawnParticles();
+
+    const drawStar = (ctx: CanvasRenderingContext2D, cx: number, cy: number, r: number) => {
+      ctx.beginPath();
+      for (let i = 0; i < 5; i++) {
+        const angle = (i * 4 * Math.PI) / 5 - Math.PI / 2;
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let alive = false;
+
+      particlesRef.current.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.25; // gravity
+        p.vx *= 0.99;
+        p.rotation += p.rotationSpeed;
+        p.opacity -= 0.012;
+
+        if (p.opacity > 0) {
+          alive = true;
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.opacity);
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+
+          if (p.shape === 'rect') {
+            ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+          } else if (p.shape === 'circle') {
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+            ctx.fill();
+          } else {
+            drawStar(ctx, 0, 0, p.size / 2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      });
+
+      if (alive) {
+        rafRef.current = requestAnimationFrame(animate);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [active, spawnParticles]);
+
+  if (!active) return null;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-[9999]"
+      style={{ width: '100vw', height: '100vh' }}
+    />
+  );
 };
 
-const AnimatedCounter: React.FC<{ value: number; duration?: number; suffix?: string; isVisible: boolean }> = ({ value, duration = 2000, suffix = '', isVisible }) => {
+// ─── Animated Counter ─────────────────────────────────────────────────────────
+const AnimatedCounter: React.FC<{
+  value: number;
+  suffix?: string;
+  isVisible: boolean;
+  duration?: number;
+}> = ({ value, suffix = '', isVisible, duration = 2200 }) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (!isVisible) return;
-    
-    let startTimestamp: number | null = null;
-    const step = (timestamp: number) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      // easeOutExpo
-      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      setCount(Math.floor(easeProgress * value));
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      }
+    let start: number | null = null;
+    const step = (ts: number) => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      setCount(Math.floor(ease * value));
+      if (progress < 1) requestAnimationFrame(step);
     };
-    window.requestAnimationFrame(step);
-  }, [value, duration, isVisible]);
+    requestAnimationFrame(step);
+  }, [isVisible, value, duration]);
 
-  // format number with commas
-  const formattedNumber = new Intl.NumberFormat('en-US').format(count);
-  return <span>{formattedNumber}{suffix}</span>;
+  return (
+    <span>
+      {new Intl.NumberFormat('en-US').format(count)}
+      {suffix}
+    </span>
+  );
 };
 
+// ─── Stats data inline (matches reference image) ──────────────────────────────
+const stats = [
+  {
+    id: 'stat-1',
+    emoji: '👥',
+    value: 95,
+    suffix: '',
+    label: 'Student Partners',
+    labelHighlight: 'enrolled',
+    isHired: false,
+  },
+  {
+    id: 'stat-2',
+    emoji: '🏋️',
+    value: 80,
+    suffix: '+',
+    label: 'Knowledge sharing',
+    labelHighlight: 'sessions delivered',
+    isHired: false,
+  },
+  {
+    id: 'stat-3',
+    emoji: '⭐',
+    value: 5,
+    suffix: '',
+    label: 'Student Partners',
+    labelHighlight: 'hired',
+    isHired: true, // confetti trigger
+  },
+  {
+    id: 'stat-4',
+    emoji: '📘',
+    value: 2100,
+    suffix: '+',
+    label: 'Students impacted',
+    labelHighlight: 'by LSPs',
+    isHired: false,
+  },
+];
+
+// ─── Main Section ─────────────────────────────────────────────────────────────
 const StatsSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const hiredCardRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [confettiActive, setConfettiActive] = useState(false);
+  const [confettiOrigin, setConfettiOrigin] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.disconnect(); // Only animate once
+          setConfettiActive(false); // reset first so the effect re-triggers
+
+          // Read position right when confetti fires so it's accurate regardless of scroll
+          setTimeout(() => {
+            if (hiredCardRef.current) {
+              const rect = hiredCardRef.current.getBoundingClientRect();
+              setConfettiOrigin({
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2,
+              });
+            }
+            setConfettiActive(true);
+          }, 1200);
+        } else {
+          // Section left viewport — reset so next entry re-triggers confetti
+          setConfettiActive(false);
+          setIsVisible(false);
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.3 }
     );
-    
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
-  // Find the stat with a goal for the progress bar (stat-4)
-  const goalStat = statsData.find(s => s.goal);
-  const progressPercentage = goalStat && goalStat.goal ? Math.min((goalStat.value / goalStat.goal) * 100, 100) : 0;
-
   return (
-    <section ref={sectionRef} className="py-20 px-6 my-12 font-sans w-full overflow-hidden">
-      <div className="max-w-6xl mx-auto">
-        
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2 tracking-tight">
-            Building it, bit by bit
-          </h2>
-          <p className="text-gray-600 text-lg font-medium">
-            Real numbers, real impact — updated every cohort
-          </p>
-        </div>
+    <>
+      <ConfettiCanvas active={confettiActive} originX={confettiOrigin.x} originY={confettiOrigin.y} />
 
-        {/* 4-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          {statsData.map((stat) => {
-            const IconComponent = iconMap[stat.iconName] || Users;
-            
-            return (
-              <div key={stat.id} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col items-center text-center relative hover:-translate-y-1 transition-transform duration-300">
-                
-                {/* Icon graphic spot */}
-                <div className="text-[#048E43] mb-4">
-                  <IconComponent size={32} strokeWidth={1.5} />
+      <section
+        ref={sectionRef}
+        id="stats"
+        style={{ backgroundColor: '#FEFAEE' }}
+        className="py-20 px-6 w-full overflow-hidden"
+      >
+        <div className="max-w-5xl mx-auto">
+
+          {/* Header */}
+          <div className="text-center mb-14">
+            <h2
+              className="text-3xl md:text-4xl font-extrabold tracking-tight"
+              style={{ color: '#0A5C47' }}
+            >
+              Building it, bit by bit
+            </h2>
+          </div>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+            {stats.map((stat) => (
+              <div
+                key={stat.id}
+                ref={stat.isHired ? hiredCardRef : undefined}
+                className="flex flex-col items-center text-center relative group"
+              >
+                {/* Emoji icon */}
+                <div
+                  className="text-5xl mb-5 transition-transform duration-300 group-hover:scale-110 select-none"
+                  style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.12))' }}
+                >
+                  {stat.emoji}
                 </div>
-                
-                {/* Numbers */}
-                <div className="flex items-start justify-center gap-1">
-                  <span className="text-5xl font-black text-gray-900 tracking-tight">
-                    <AnimatedCounter value={stat.value} suffix={stat.suffix} isVisible={isVisible} />
+
+                {/* Animated number */}
+                <div
+                  className="text-5xl md:text-6xl font-black leading-none mb-3"
+                  style={{ color: '#0A5C47' }}
+                >
+                  <AnimatedCounter
+                    value={stat.value}
+                    suffix={stat.suffix}
+                    isVisible={isVisible}
+                    duration={stat.isHired ? 1800 : 2200}
+                  />
+                </div>
+
+                {/* Label: regular + highlighted word */}
+                <p className="text-gray-700 text-sm font-medium leading-snug max-w-[120px]">
+                  {stat.label}{' '}
+                  <span
+                    className="font-semibold"
+                    style={{ color: stat.isHired ? '#0A5C47' : '#374151' }}
+                  >
+                    {stat.labelHighlight}
                   </span>
-                </div>
-                
-                {/* Label text */}
-                <p className="text-gray-700 text-sm font-semibold mt-3 mb-1 px-4 leading-tight">
-                  {stat.label}
                 </p>
 
-                {/* Optional Badge */}
-                {stat.badge && (
-                  <div className="absolute top-4 right-4">
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-[#048E43]/10 text-[#048E43] border border-[#048E43]/20">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#048E43] animate-pulse"></span>
-                      {stat.badge}
-                    </span>
-                  </div>
-                )}
-                
-                {/* Sub text */}
-                {stat.subText && (
-                  <p className="text-gray-500 text-xs mt-3 pt-3 border-t border-gray-100 w-full font-medium">
-                    {stat.subText}
-                  </p>
-                )}
-                
-                {/* Optional Goal for cards if we wanted, but we have a dedicated bar */}
-                {stat.goal && (
-                  <p className="text-[#048E43] text-xs mt-3 pt-3 border-t border-gray-100 w-full flex items-center justify-center gap-1 font-bold">
-                    Goal: {new Intl.NumberFormat('en-US').format(stat.goal)} <span className="rotate-[-45deg] leading-none">→</span>
-                  </p>
-                )}
+
               </div>
-            );
-          })}
-        </div>
-
-        {/* Progress Bar Section */}
-        {goalStat && goalStat.goal && (
-          <div>
-            <div className="flex justify-between items-end mb-3">
-              <span className="text-gray-900 font-bold text-lg">Students impacted toward goal</span>
-              <span className="text-[#048E43] font-black text-lg">{Math.round(progressPercentage)}%</span>
-            </div>
-            <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-[#048E43] transition-all duration-1000 ease-out rounded-full"
-                style={{ width: isVisible ? `${progressPercentage}%` : '0%', transitionDelay: '300ms' }}
-              ></div>
-            </div>
-            <div className="flex justify-between items-center mt-3 text-sm text-gray-500 font-medium">
-              <span>0</span>
-              <span>Goal: {new Intl.NumberFormat('en-US').format(goalStat.goal)}</span>
-            </div>
+            ))}
           </div>
-        )}
 
-      </div>
-    </section>
+        </div>
+      </section>
+    </>
   );
 };
 

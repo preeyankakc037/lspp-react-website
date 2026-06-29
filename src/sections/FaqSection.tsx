@@ -24,7 +24,7 @@ const FAQSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0); // Defaulting 0 to open the first item
 
   return (
-    <section className="py-24 px-6 max-w-3xl mx-auto">
+    <section id="faq" className="py-24 px-6 max-w-3xl mx-auto">
       <div className="mb-16">
         <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
           Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Questions</span>

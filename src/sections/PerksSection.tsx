@@ -4,7 +4,7 @@ import { perksData } from '../data/perksData';
 
 const PerksSection: React.FC = () => {
   return (
-    <section className="py-20 px-6 max-w-7xl mx-auto">
+    <section id="perks" className="py-20 px-6 max-w-7xl mx-auto">
       
       {/* Section Header */}
       <div className="mb-12">

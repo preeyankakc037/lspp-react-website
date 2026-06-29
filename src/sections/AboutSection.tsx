@@ -2,7 +2,7 @@ import React from 'react';
 
 const AboutSection: React.FC = () => {
   return (
-    <section className="px-6 my-4 max-w-7xl mx-auto">
+    <section id="about" className="px-6 my-4 max-w-7xl mx-auto">
       <div className="bg-[#FCF6E8] rounded-[3rem] py-16 px-8 md:px-20 text-center max-w-6xl mx-auto">
         
         {/* Centered Target Block Heading */}

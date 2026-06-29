@@ -5,12 +5,8 @@ const PartnersSection: React.FC = () => {
   const [activeYear, setActiveYear] = useState<string>('2026');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCollege, setSelectedCollege] = useState('');
-  const [selectedTrack, setSelectedTrack] = useState(''); // Placeholder for future track data
-  
   const years = ['2022', '2023', '2024', '2025', '2026'];
   const uniqueColleges = Array.from(new Set(partnersData.map(p => p.college))).sort();
-  // Placeholder tracks since they aren't in the data yet
-  const tracks = ['Frontend', 'Backend', 'Design', 'QA'];
 
   // Apply filters
   const filteredPartners = partnersData.filter(p => {
@@ -22,7 +18,7 @@ const PartnersSection: React.FC = () => {
   });
 
   return (
-    <section className="py-20 px-6 max-w-7xl mx-auto">
+    <section id="student-partners" className="py-20 px-6 max-w-7xl mx-auto">
       
       {/* Header Container */}
       <div className="text-center mb-10">
@@ -46,7 +42,7 @@ const PartnersSection: React.FC = () => {
                 : 'hover:text-gray-900 bg-gray-100'
             }`}
           >
-            Batch of {year}
+            {year}
           </button>
         ))}
       </div>
@@ -82,17 +78,6 @@ const PartnersSection: React.FC = () => {
             ))}
           </select>
 
-          <select
-            value={selectedTrack}
-            onChange={(e) => setSelectedTrack(e.target.value)}
-            className="w-full sm:w-48 px-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00875A]/20 focus:border-[#00875A] text-sm text-gray-700 cursor-pointer appearance-none"
-            style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%236B7280\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundPosition: 'right 0.75rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.25em 1.25em', paddingRight: '2.5rem' }}
-          >
-            <option value="">💻 All Tracks</option>
-            {tracks.map((track) => (
-              <option key={track} value={track}>{track}</option>
-            ))}
-          </select>
         </div>
       </div>
 
@@ -137,7 +122,7 @@ const PartnersSection: React.FC = () => {
           <span className="text-3xl mb-3 block">🧐</span>
           <p className="font-medium">No partners found matching your filters.</p>
           <button 
-            onClick={() => { setSearchQuery(''); setSelectedCollege(''); setSelectedTrack(''); }}
+            onClick={() => { setSearchQuery(''); setSelectedCollege(''); }}
             className="mt-4 text-[#00875A] font-medium hover:underline"
           >
             Clear all filters

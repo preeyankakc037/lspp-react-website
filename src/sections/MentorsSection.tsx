@@ -20,7 +20,7 @@ const mentors = [
 
 const MentorsSection: React.FC = () => {
   return (
-    <section className="py-16 md:py-24 px-6 md:px-16 max-w-7xl mx-auto text-center">
+    <section id="mentors" className="py-16 md:py-24 px-6 md:px-16 max-w-7xl mx-auto text-center">
       
       {/* Header section */}
       <div className="mb-12">
