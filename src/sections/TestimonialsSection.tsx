@@ -57,12 +57,12 @@ const TestimonialsSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-16 md:py-24 bg-[#FDF8E7] w-full flex justify-center overflow-hidden">
+    <section className="py-10 md:py-14 bg-[#FDF8E7] w-full flex justify-center overflow-hidden">
 
       <div className="w-full max-w-6xl px-6 md:px-12">
 
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-[40px] font-bold text-[#005364] leading-tight">
+        <div className="text-center mb-8 md:mb-10">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-[#005364] leading-tight">
             Hear it from our former <br/> Student Partners
           </h2>
         </div>
@@ -81,7 +81,7 @@ const TestimonialsSection: React.FC = () => {
                 {slideGroup.map((testimonial, index) => (
                   <div key={index} className="flex flex-col text-left">
 
-                    <div className="w-32 h-32 rounded-3xl overflow-hidden mb-6 bg-gray-200 shrink-0 shadow-sm">
+                    <div className="w-20 h-20 rounded-2xl overflow-hidden mb-4 bg-gray-200 shrink-0 shadow-sm">
                       <img 
                         src={testimonial.image} 
                         alt={testimonial.name}
@@ -97,7 +97,7 @@ const TestimonialsSection: React.FC = () => {
                       />
                     </div>
 
-                    <p className="text-gray-800 text-[15px] leading-relaxed mb-6 grow">
+                    <p className="text-gray-800 text-sm leading-relaxed mb-4 grow">
                       {testimonial.quote}
                     </p>
 
@@ -117,7 +117,7 @@ const TestimonialsSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex justify-center items-center gap-2 mt-12">
+        <div className="flex justify-center items-center gap-2 mt-8">
           {testimonialSlides.map((_, index) => (
             <button
               key={index}
