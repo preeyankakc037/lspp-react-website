@@ -1,3 +1,4 @@
+import { Star, Rocket, TrendingUp, Handshake } from 'lucide-react';
 import type { PerkCardData } from '../types';
 
 export const perksData: PerkCardData[] = [
@@ -9,7 +10,7 @@ export const perksData: PerkCardData[] = [
       "Organize events, workshops, and meetups.",
       "Be the face of Leapfrog in your college."
     ],
-    iconSymbol: "⭐"
+    iconSymbol: <Star size={24} strokeWidth={2} />
   },
   {
     id: "perk-2",
@@ -19,7 +20,7 @@ export const perksData: PerkCardData[] = [
       "Direct referral for internship/fellowship opportunities.",
       "Get a sneak peek into the Leapfrog culture."
     ],
-    iconSymbol: "🚀"
+    iconSymbol: <Rocket size={24} strokeWidth={2} />
   },
   {
     id: "perk-3",
@@ -29,7 +30,7 @@ export const perksData: PerkCardData[] = [
       "Mentorship from industry experts.",
       "Get hands-on experience in community building."
     ],
-    iconSymbol: "📈"
+    iconSymbol: <TrendingUp size={24} strokeWidth={2} />
   },
   {
     id: "perk-4",
@@ -39,6 +40,6 @@ export const perksData: PerkCardData[] = [
       "Expand your professional network.",
       "Exclusive access to Leapfrog events."
     ],
-    iconSymbol: "🤝"
+    iconSymbol: <Handshake size={24} strokeWidth={2} />
   }
 ];

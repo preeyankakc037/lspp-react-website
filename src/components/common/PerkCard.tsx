@@ -23,8 +23,8 @@ const PerkCard: React.FC<PerkCardData> = ({ title, bulletPoints, iconSymbol, var
   return (
     <div className={`${currentStyle.cardBg} rounded-2xl p-8 flex flex-col gap-6 shadow-sm hover:shadow-md transition-shadow`}>
       
-      {/* Dynamic Icon Circle */}
-      <div className={`${currentStyle.iconBg} w-14 h-14 rounded-full flex items-center justify-center text-2xl text-white shadow-inner`}>
+      {/* Icon Circle */}
+      <div className={`${currentStyle.iconBg} w-14 h-14 rounded-full flex items-center justify-center text-white shadow-inner`}>
         {iconSymbol}
       </div>
 

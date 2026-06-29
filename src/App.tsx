@@ -1,4 +1,3 @@
-import React from 'react';
 import HighlightsSection from './sections/HighlightsSection';
 import HeroSection from './sections/HeroSection';
 import AboutSection from './sections/AboutSection';
@@ -10,7 +9,6 @@ import ResourcesSection from './sections/ResourcesSection';
 import FAQSection from './sections/FaqSection';
 import CTASection from './sections/CTASection';
 import Footer from './sections/Footer';
-import PerkCard from './components/common/PerkCard';
 import PerksSection from './sections/PerksSection';
 import ContributingSection from './sections/ContributingSection';
 

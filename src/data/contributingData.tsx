@@ -1,3 +1,4 @@
+import { Megaphone, Lightbulb } from 'lucide-react';
 import type { PerkCardData } from '../types';
 
 export const contributingData: PerkCardData[] = [
@@ -9,7 +10,7 @@ export const contributingData: PerkCardData[] = [
       "Host regular workshops and events focused on accelerating skill building",
       "Learn and develop design, technology, and business skills from industry professionals"
     ],
-    iconSymbol: "📢"
+    iconSymbol: <Megaphone size={24} strokeWidth={2} />
   },
   {
     id: "contrib-2",
@@ -19,6 +20,6 @@ export const contributingData: PerkCardData[] = [
       "Take new learnings to build solutions for real life problems",
       "Strengthen your own skill set while building future leaders"
     ],
-    iconSymbol: "🛠️"
+    iconSymbol: <Lightbulb size={24} strokeWidth={2} />
   },
 ];

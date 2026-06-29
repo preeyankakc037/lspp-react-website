@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { Users, BookOpen, Briefcase, GraduationCap } from 'lucide-react';
 
 // ─── Confetti particle type ───────────────────────────────────────────────────
 interface Particle {
@@ -160,7 +161,7 @@ const AnimatedCounter: React.FC<{
 const stats = [
   {
     id: 'stat-1',
-    emoji: '👥',
+    icon: Users,
     value: 95,
     suffix: '',
     label: 'Student Partners',
@@ -169,7 +170,7 @@ const stats = [
   },
   {
     id: 'stat-2',
-    emoji: '🏋️',
+    icon: BookOpen,
     value: 80,
     suffix: '+',
     label: 'Knowledge sharing',
@@ -178,7 +179,7 @@ const stats = [
   },
   {
     id: 'stat-3',
-    emoji: '⭐',
+    icon: Briefcase,
     value: 5,
     suffix: '',
     label: 'Student Partners',
@@ -187,7 +188,7 @@ const stats = [
   },
   {
     id: 'stat-4',
-    emoji: '📘',
+    icon: GraduationCap,
     value: 2100,
     suffix: '+',
     label: 'Students impacted',
@@ -265,12 +266,12 @@ const StatsSection: React.FC = () => {
                 ref={stat.isHired ? hiredCardRef : undefined}
                 className="flex flex-col items-center text-center relative group"
               >
-                {/* Emoji icon */}
+                {/* Icon */}
                 <div
-                  className="text-5xl mb-5 transition-transform duration-300 group-hover:scale-110 select-none"
-                  style={{ filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.12))' }}
+                  className="mb-5 transition-transform duration-300 group-hover:scale-110"
+                  style={{ color: '#0A5C47' }}
                 >
-                  {stat.emoji}
+                  <stat.icon size={44} strokeWidth={1.5} />
                 </div>
 
                 {/* Animated number */}

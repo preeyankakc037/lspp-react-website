@@ -1,8 +1,10 @@
+import type { ReactNode } from 'react';
+
 export interface PerkCardData {
   id: string;
   title: string;
   bulletPoints: string[];
-  iconSymbol: string;
+  iconSymbol: ReactNode;
   variant?: 'orange' | 'blue'; // 👈 Add this optional prop line
 }
 
