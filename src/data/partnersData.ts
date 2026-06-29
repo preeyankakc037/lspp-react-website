@@ -2,7 +2,7 @@ import type { PartnerProfile } from '../types';
 
 const real2026Students = [
   { name: "Aakriti Pandey", college: "Kathmandu University", imageUrl: "/students images/aakiriti.png" },
-  { name: "Arekh Shrestha", college: "Kathmandu University School of Engineering", imageUrl: "/students images/arekh.png" },
+  { name: "Arekh Shrestha", college: "Kathmandu University", imageUrl: "/students images/arekh.png" },
   { name: "Nirika Lamichhane", college: "IOE Thapathali Campus", imageUrl: "/students images/nirika.png" },
   { name: "Sworna Dhan Tuladhar", college: "Islington College", imageUrl: "/students images/sworna.png" },
   { name: "Ayam Kattel", college: "Pulchowk Campus", imageUrl: "/students images/ayam.png" },

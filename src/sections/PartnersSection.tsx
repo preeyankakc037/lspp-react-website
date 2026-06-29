@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { partnersData } from '../data/partnersData';
 import { Search, GraduationCap } from 'lucide-react';
 
@@ -17,6 +17,18 @@ const PartnersSection: React.FC = () => {
   const [activeYear, setActiveYear] = useState<string>('2026');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCollege, setSelectedCollege] = useState('');
+  const [collegeDropdownOpen, setCollegeDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setCollegeDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
   const years = ['2022', '2023', '2024', '2025', '2026'];
   const uniqueColleges = Array.from(new Set(partnersData.map(p => p.college))).sort();
 
@@ -26,6 +38,11 @@ const PartnersSection: React.FC = () => {
     const matchCollege = selectedCollege ? p.college === selectedCollege : true;
     return matchYear && matchSearch && matchCollege;
   });
+
+  const handleCollegeSelect = (college: string) => {
+    setSelectedCollege(college);
+    setCollegeDropdownOpen(false);
+  };
 
   return (
     <section id="student-partners" className="py-20 px-6 max-w-5xl mx-auto">
@@ -71,23 +88,59 @@ const PartnersSection: React.FC = () => {
         </div>
 
         <div className="flex flex-col sm:flex-row w-full md:w-auto gap-4">
-          <div className="relative w-full md:w-auto">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <GraduationCap className="w-4 h-4 text-gray-400" />
-            </div>
-            <select
-              value={selectedCollege}
-              onChange={(e) => setSelectedCollege(e.target.value)}
-              className="w-full sm:w-72 pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00875A]/20 focus:border-[#00875A] text-sm text-gray-700 cursor-pointer appearance-none truncate"
-              style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'%236B7280\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")', backgroundPosition: 'right 0.75rem center', backgroundRepeat: 'no-repeat', backgroundSize: '1.25em 1.25em', paddingRight: '2.5rem' }}
+          {/* Custom College Dropdown */}
+          <div ref={dropdownRef} className="relative w-full sm:w-72">
+            <button
+              type="button"
+              onClick={() => setCollegeDropdownOpen(prev => !prev)}
+              className="w-full flex items-center gap-2 pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00875A]/20 focus:border-[#00875A] text-sm text-gray-700 cursor-pointer text-left transition-all"
             >
-              <option value="">All Colleges</option>
-              {uniqueColleges.map((college) => (
-                <option key={college} value={college}>{college}</option>
-              ))}
-            </select>
-          </div>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                <GraduationCap className="w-4 h-4 text-gray-400" />
+              </span>
+              <span className="flex-1 truncate">
+                {selectedCollege || 'All Colleges'}
+              </span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className={`w-4 h-4 text-gray-400 transition-transform duration-200 shrink-0 ${collegeDropdownOpen ? 'rotate-180' : ''}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
 
+            {collegeDropdownOpen && (
+              <ul className="absolute z-50 mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto py-1">
+                <li
+                  onMouseDown={(e) => { e.preventDefault(); handleCollegeSelect(''); }}
+                  className={`px-4 py-2 text-sm cursor-pointer transition-colors ${
+                    selectedCollege === ''
+                      ? 'bg-[#00875A] text-white font-semibold'
+                      : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                >
+                  All Colleges
+                </li>
+                {uniqueColleges.map((college) => (
+                  <li
+                    key={college}
+                    onMouseDown={(e) => { e.preventDefault(); handleCollegeSelect(college); }}
+                    className={`px-4 py-2 text-sm cursor-pointer transition-colors ${
+                      selectedCollege === college
+                        ? 'bg-[#00875A] text-white font-semibold'
+                        : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    {college}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       </div>
 
